@@ -20,34 +20,48 @@ def can_be_created_with_a_hash_of_attributes
       lead: "Paul Newman",
       in_theaters: false
   }
-  movie = Movie.create(attributes)
+  movie = Movie.create(title: attributes[:title],
+                       release_date: attributes[:release_date],
+                       director: attributes[:director],
+                       lead: attributes[:lead],
+                       in_theaters: attributes[:in_theaters])
+  # users.create(name: 'fxn')
+  # users.create # => #<User id: 4, name: "fxn", ...>
+  # yes i think so
+  # yes makes sense, haven't yet let's see
+  # you need not be nervous you are doing great
+  # that's for the next test
 end
+
 
 def can_be_created_in_a_block(args = { title: "Home Alone", release_date: 1990 })
 # If no arguments are passed, use default values:
   # title == "Home Alone"
   # release_date == 1990
   # binding.pry
+  # users.create { |user| user.name = 'tenderlove' }
+# => #<User id: 5, name: "tenderlove", ...>
   Movie.create do |m|
     # __
-    m.can_be_created_with_a_hash_of_attributes
+    m.title = args[:title]
+    m.release_date = args[:release_date]
   end
 end
 
 def can_get_the_first_item_in_the_database
-  self.first
+  Movie.first
 end
 
 def can_get_the_last_item_in_the_database
-  self.last
+  Movie.last
 end
 
 def can_get_size_of_the_database
-  self.size
+  Movie.all.size
 end
 
 def can_find_the_first_item_from_the_database_using_id
-  self.first
+  Movie.first
 end
 
 def can_find_by_multiple_attributes
@@ -55,13 +69,16 @@ def can_find_by_multiple_attributes
   # title == "Title"
   # release_date == 2000
   # director == "Me"
-  __
+  # __
+  Movie.find_by(title: 'Title', release_date: 2000, director: 'Me')
 end
 
 def can_find_using_where_clause_and_be_sorted
   # For this test return all movies released after 2002 and ordered by 
   # release date descending
-  __
+  # __
+  Movie.where(release_date > 2002).order(release_date: desc)
+  # users = User.where(name: 'David', occupation: 'Code Artist').order(created_at: :desc)
 end
 
 def can_be_found_updated_and_saved
